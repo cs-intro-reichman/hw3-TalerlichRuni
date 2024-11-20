@@ -16,7 +16,6 @@ public class Anagram {
 		// Performs a stress test of randomAnagram 
 		String str = "1234567";
 		boolean pass = true;
-		// 10 can be changed to much larger values, like 1000
 		for (int i = 0; i < 10; i++) {
 			String randomAnagram = randomAnagram(str);
 			System.out.println(randomAnagram);
@@ -56,15 +55,14 @@ public class Anagram {
 	}
 
 	// Returns a preprocessed version of the given string: all the letter characters are converted
-	// to lower-case, and all the other characters are deleted, except for spaces, which are left
-	// as is. 
+	// to lower-case, spaces are preserved, and all the other characters are deleted.
 	public static String preProcess(String str) {
 		String processed = "";
 		for (int i = 0; i < str.length(); i++) {
 			char c = str.charAt(i);
 			if (c >= 'A' && c <= 'Z') {
 				processed += (char) (c + ('a' - 'A'));
-			} else if (c >= 'a' && c <= 'z') {
+			} else if ((c >= 'a' && c <= 'z') || c == ' ') {
 				processed += c;
 			}
 		}
@@ -72,16 +70,34 @@ public class Anagram {
 	}
 
 	// Returns a random anagram of the given string. The random anagram consists of the same
-	// characters as the given string, re-arranged in a random order. 
+	// characters as the given string, re-arranged in a random order. Spaces are preserved.
 	public static String randomAnagram(String str) {
 		str = preProcess(str);
 		String result = "";
+		String spaces = "";
+
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) == ' ') {
+				spaces += i + ",";
+			}
+		}
+
+		str = str.replace(" ", "");
 
 		while (str.length() > 0) {
 			int random = (int) (Math.random() * str.length());
 			result += str.charAt(random);
 			str = str.substring(0, random) + str.substring(random + 1);
 		}
+
+		if (!spaces.isEmpty()) {
+			String[] spacePositions = spaces.split(",");
+			for (int i = 0; i < spacePositions.length; i++) {
+				int pos = Integer.parseInt(spacePositions[i]);
+				result = result.substring(0, pos) + " " + result.substring(pos);
+			}
+		}
+
 		return result;
 	}
 }
