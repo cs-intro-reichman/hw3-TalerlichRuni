@@ -20,61 +20,74 @@ public class Algebra {
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
-		int plus = 0;
-		for (int i = 0; i < x1; i++) {
-			if (x1 > 0) plus++; 
-			else plus--; 
-		}		
-		for (int i = 0; i < x2; i++) {
-			if (x2 > 0) plus++; 
-			else plus--; 
+		int plus = x1;
+		if (x2 > 0) {
+			for (int i = 0; i < x2; i++) {
+				plus++;
+			}
+		} else {
+			for (int i = 0; i < -x2; i++) {
+				plus--;
+			}
 		}
 		return plus;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
-		int minus = 0;
-		for (int i = 0; i < x1; i++) {
-			if (x1 > 0) minus++; 
-			else minus--;	
-		}		
-		for (int i = 0; i < x2; i++) {
-			if (x2 > 0) minus--; 
-			else minus++;	
-		}		
-		return minus;
+		return plus(x1, -x2);
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
-		int times = 0;
-		for (int i = 0; i < x1; i++) {
-			times += x2;
+		int result = 0;
+		boolean isNegative = false;
+		if (x1 < 0) {
+			x1 = plus(~x1, 1); 
+			isNegative = !isNegative;
 		}
-		return times;
+		if (x2 < 0) {
+			x2 = plus(~x2, 1); 
+			isNegative = !isNegative;
+		}
+		for (int i = 0; i < x1; i++) {
+			result = plus(result, x2);
+		}
+		if (isNegative) {
+			result = plus(~result, 1); 
+		}
+		return result;
 	}
 
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
-		int pow = 1;
+		int result = 1;
 		for (int i = 0; i < n; i++) {
-			pow = times(pow, x);
+			result = times(result, x);
 		}
-		return pow;
+		return result;
 	}
 
 	// Returns the integer part of x1 / x2
 	public static int div(int x1, int x2) {
-		int div = 0;
-		int i = 0;
-		if (x1 >= x2) {
-			while (i + x2 <= x1) {
-				i += x2;
-				div++;
-			}
+		int result = 0;
+		boolean isNegative = false;
+		if (x1 < 0) {
+			x1 = plus(~x1, 1); 
+			isNegative = !isNegative;
 		}
-		return div;
+		if (x2 < 0) {
+			x2 = plus(~x2, 1);  
+			isNegative = !isNegative;
+		}
+		while (x1 >= x2) {
+			x1 = minus(x1, x2);
+			result = plus(result, 1);
+		}
+		if (isNegative) {
+			result = plus(~result, 1); 
+		}
+		return result;
 	}
 
 	// Returns x1 % x2
@@ -90,7 +103,7 @@ public class Algebra {
 		int i = 0;
 		while (times(i, i) <= x) {
 			sqrt = i;
-			i++;
+			i = plus(i, 1);
 		}
 		return sqrt;
 	}
