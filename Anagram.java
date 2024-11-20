@@ -26,24 +26,57 @@ public class Anagram {
 		System.out.println(pass ? "test passed" : "test Failed");
 	}  
 
+
+
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		// Replace the following statement with your code
-		return false;
+		boolean result = true;
+		str1 = preProcess(str1);
+		str2 = preProcess(str2);
+	
+		if (str1.length() != str2.length()) {
+			result = false;
+		} else {
+			for (int i = 0; i < str1.length(); i++) {
+				boolean matchFound = false;
+				for (int u = 0; u < str2.length(); u++) {
+					if (str1.charAt(i) == str2.charAt(u)) {
+						matchFound = true;
+						str2 = str2.substring(0, u) + str2.substring(u + 1); 
+						break;
+					}
+				}
+				if (!matchFound) {
+					result = false;
+					break;
+				}
+			}
+		}
+		return result;
 	}
 	   
 	// Returns a preprocessed version of the given string: all the letter characters are converted
 	// to lower-case, and all the other characters are deleted, except for spaces, which are left
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
-		// Replace the following statement with your code
-		return "";
+		str=str.replaceAll("[^a-zA-Z]", "").toLowerCase();
+		return str;
 	} 
 	   
 	// Returns a random anagram of the given string. The random anagram consists of the same
 	// characters as the given string, re-arranged in a random order. 
 	public static String randomAnagram(String str) {
-		// Replace the following statement with your code
-		return "";
-	}
+        str = preProcess(str);
+        StringBuilder str1 = new StringBuilder(str);
+        
+        for (int i = 0; i < str.length(); i++) {
+            StringBuilder str2 = new StringBuilder(str);
+            int random = (int)(Math.random() * (str1.length()));
+            str1.setCharAt(i, str2.charAt(random));
+            str2.deleteCharAt(random);
+            str = str2.toString();
+        }
+        
+        return str1.toString();
+    }
 }

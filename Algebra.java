@@ -25,43 +25,98 @@ public class Algebra {
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int plus=0;
+    for (int i=0; i<x1;i++)
+	{
+    plus++; 
+	}		
+	for (int i=0; i<x2;i++)
+	{
+    plus++; 
+	}	
+    return plus;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int minus=0;
+		for (int i=0; i<x1;i++)
+		{
+		minus++; 
+		}		
+		for (int i=0; i<x2;i++)
+		{
+		minus--; 
+		}		
+		return minus;
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int times=0;
+		for (int i=0; i<x1;i++)
+		{
+        times++;
+		}		
+		for (int i=1 ; i<x2 ;i++)
+		{
+		times=times+x1; 
+		}		
+		return times;
 	}
 
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
-		// Replace the following statement with your code
-		return 0;
+		int pow=x;
+if (n>0){	
+for (int i = 1; i < n; i++) //5^3
+{
+		pow=times(pow, x);
+}
+	}
+return pow;
 	}
 
 	// Returns the integer part of x1 / x2 
-	public static int div(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+	public static int div(int x1, int x2)
+	 {
+int div=0;
+int i=0;
+if (x1<x2) div=0;
+else {
+	while (i + x2 <= x1) 
+	{
+        i += x2; 
+        div++;  
+	}
+}
+		return div;
 	}
 
 	// Returns x1 % x2
-	public static int mod(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+	public static int mod(int x1, int x2){
+int i =0;
+int mod=0;
+int u=0;
+if(x1<x2) mod=x1;
+else{
+i = div(x1,x2);
+u= times(i,x2);
+mod = x1-u;
+}
+		return mod;
 	}	
 
 	// Returns the integer part of sqrt(x) 
-	public static int sqrt(int x) {
-		// Replace the following statement with your code
-		return 0;
-	}	  	  
+	public static int sqrt(int x)
+	 {
+		int sqrt=0;
+		int i=1;
+		while (times(i,i) <= x) 
+		{
+			sqrt = i;
+			i++;
+		}	 
+	return sqrt;
+}
 }
